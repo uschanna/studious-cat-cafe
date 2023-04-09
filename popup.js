@@ -41,6 +41,13 @@
   }
   
 // add an event listener for "your-cafe-button" that opens your-cafe.html in a new tab
+//document.getElementById("your-cafe-button").addEventListener("click", function() {
+//    chrome.tabs.create({url: "your-cafe.html"});
+//});
+
 document.getElementById("your-cafe-button").addEventListener("click", function() {
-    chrome.tabs.create({url: "your-cafe.html"});
-});
+    chrome.extension.getViews({type: "popup"}).forEach(function(win) {
+      win.location.href = "your-cafe.html";
+    });
+  });
+  
