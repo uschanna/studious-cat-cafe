@@ -7,12 +7,10 @@
   "background": {
     "scripts": ["background.js"]
   },
-  "web_accessible_resources": [
-    {
-      "matches": "<all_urls>",
-      "resources": "settings.html"
-    }
-  ],
+  "web_accessible_resources": {
+    "matches": ["<all_urls>"],
+    "resources": ["settings.html"]
+  },
   "icons": {
     "16": "assets/ext-icon.png",
     "24": "assets/ext-icon.png",
