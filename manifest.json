@@ -10,7 +10,7 @@
   "web_accessible_resources": [
     {
       "resources": ["settings.html"],
-      "matches": ["http://*/*", "https://*/*"]
+      "matches": ["<all_urls>"]
     }
   ],
   "icons": {
