@@ -1,9 +1,4 @@
-// Add an event listener for the settings button
-document.getElementById("settings-button").addEventListener("click", function() {
-    // Open the settings page in a new tab
-    chrome.tabs.create({ url: "settings.html" });
-  });
-  // pomodoro timer
+// pomodoro timer
   function startTimer() {
     timerIsRunning = true;
     startButton.disabled = true;
