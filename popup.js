@@ -16,9 +16,9 @@ timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
 function startTimer() {
   timerIsRunning = true;
   //startButton.disabled = true;
-  resetButton.disabled = false;
-  decreaseButton.disabled = true;
-  increaseButton.disabled = true;
+  //resetButton.disabled = false;
+  //decreaseButton.disabled = true;
+  //increaseButton.disabled = true;
 
   let minutes = parseInt(timer.textContent.split(':')[0]);
   let seconds = parseInt(timer.textContent.split(':')[1]);
