@@ -1,9 +1,9 @@
 // Define variables
 const timer = document.getElementById('timer');
-const startButton = document.getElementById('start-button');
-const resetButton = document.getElementById('reset-button');
-const decreaseButton = document.getElementById('decrease-button');
-const increaseButton = document.getElementById('increase-button');
+const startButton = document.getElementById('start-button').addEventListener('click', startTimer);
+const resetButton = document.getElementById('reset-button').addEventListener('click', resetTimer);
+const decreaseButton = document.getElementById('decrease-button').addEventListener('click', decreaseTime);
+const increaseButton = document.getElementById('increase-button').addEventListener('click', increaseTime);
 const catContainer = document.getElementById('cat-container');
 let timerInterval;
 let timerIsRunning = false;
