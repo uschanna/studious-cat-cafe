@@ -1,5 +1,5 @@
 // pomodoro timer
-  function startTimer() {
+function startTimer() {
     timerIsRunning = true;
     startButton.disabled = true;
     resetButton.disabled = false;
@@ -20,18 +20,11 @@
         increaseButton.disabled = false;
         settingsButton.disabled = false;
   
-        // Call the Cataas API to generate a random cat image
-        fetch('https://cataas.com/cat?json=true')
-          .then(response => response.json())
-          .then(data => {
-            const catImageUrl = `https://cataas.com/cat/${data.id}`;
-            const img = document.createElement('img');
-            img.src = catImageUrl;
-            document.getElementById('cat-container').appendChild(img);
-         })
-          .catch(error => {
-            console.log(error);
-          });
+        // Call the RoboHash API to generate a random cat image
+        const catImageUrl = `https://robohash.org/${Math.floor(Math.random() * 100)}?set=set4`;
+        const img = document.createElement('img');
+        img.src = catImageUrl;
+        document.getElementById('cat-container').appendChild(img);
       } else {
         totalSeconds--;
         minutes = Math.floor(totalSeconds / 60);
@@ -40,6 +33,7 @@
       }
     }, 1000);
   }
+  
   
 // add an event listener for "your-cafe-button" that opens your-cafe.html in a new tab
 //document.getElementById("your-cafe-button").addEventListener("click", function() {
