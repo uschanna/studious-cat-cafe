@@ -3,18 +3,47 @@
   "name": "studious cat cafe",
   "version": "0.1.0",
   "description": "get rewarded with cats for studying",
-  "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
+  "permissions": ["storage", "scripting", "contextMenus"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },
-  "web_accessible_resources": [{
-    "resources": ["settings.html"],
-    "matches": ["<all_urls>"]
-  }],
+  "web_accessible_resources": [
+    {
+      "resources": "settings.html",
+      "matches": ["<all_urls>"]
+    }
+  ],
   "action": {
-    "default_icon": "assets/ext-icon.png",
+    "default_icon": {
+      "16": "assets/ext-icon.png",
+      "24": "assets/ext-icon.png",
+      "32": "assets/ext-icon.png"
+    },
     "default_title": "studious cat cafe",
     "default_popup": "popup.html"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "block_ads",
+        "enabled": true,
+        "path": "rules/block_ads.json"
+      }
+    ],
+    "rules": [
+      {
+        "id": 1,
+        "priority": 1,
+        "action": {
+          "type": "redirect",
+          "redirect": {"extensionPath": "/popup.html"}
+        },
+        "condition": {
+          "urlFilter": "*://*/*",
+          "resourceTypes": ["script"]
+        }
+      }
+    ]
   }
 }
