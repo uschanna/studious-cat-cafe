@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -25,6 +25,38 @@
       <img id="cat-image" src="" alt="Generated Cat Image">
     </div>
     
+
+    <script src="popup.js"></script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Pomodoro Timer</title>
+    <style>
+      /* Add your styles here */
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <button id="your-cafe-button">your cafe</button>
+      </nav>
+    </header>
+    <div>
+      <h1>Pomodoro Timer</h1>
+      <p id="timer">25:00</p>
+      <div id="button-container">
+        <button id="start-button" onclick="startTimer()">Start</button>
+        <button id="reset-button" onclick="resetTimer()" disabled>Reset</button>
+        <button id="decrease-button" onclick="decreaseTime()" disabled>-</button>
+        <button id="increase-button" onclick="increaseTime()" disabled>+</button>
+        <button id="settings-button" onclick="openSettings()" disabled>Settings</button>
+      </div>
+      <div id="cat-container"></div>
+    </div>
 
     <script src="popup.js"></script>
   </body>

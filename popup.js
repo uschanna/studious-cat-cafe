@@ -5,7 +5,6 @@ function startTimer() {
     resetButton.disabled = false;
     decreaseButton.disabled = true;
     increaseButton.disabled = true;
-    settingsButton.disabled = true;
   
     let minutes = parseInt(timer.textContent.split(':')[0]);
     let seconds = parseInt(timer.textContent.split(':')[1]);
@@ -18,13 +17,17 @@ function startTimer() {
         startButton.disabled = false;
         decreaseButton.disabled = false;
         increaseButton.disabled = false;
-        settingsButton.disabled = false;
   
-        // Call the RoboHash API to generate a random cat image
-        const catImageUrl = `https://robohash.org/${Math.floor(Math.random() * 100)}?set=set4`;
-        const img = document.createElement('img');
-        img.src = catImageUrl;
-        document.getElementById('cat-container').appendChild(img);
+        // Call the Robohash API to generate a random cat image
+        fetch('https://robohash.org/cat.png?size=200x200')
+          .then(response => {
+            const img = document.createElement('img');
+            img.src = response.url;
+            document.getElementById('cat-container').appendChild(img);
+          })
+          .catch(error => {
+            console.log(error);
+          });
       } else {
         totalSeconds--;
         minutes = Math.floor(totalSeconds / 60);
@@ -33,6 +36,7 @@ function startTimer() {
       }
     }, 1000);
   }
+  
   
   
 // add an event listener for "your-cafe-button" that opens your-cafe.html in a new tab
