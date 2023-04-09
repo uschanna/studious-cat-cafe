@@ -1,14 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
 // Define variables
 const timer = document.getElementById('timer');
-const startButton = document.getElementById('start-button').addEventListener('click', startTimer);
-const resetButton = document.getElementById('reset-button').addEventListener('click', resetTimer);
-const decreaseButton = document.getElementById('decrease-button').addEventListener('click', decreaseTime);
-const increaseButton = document.getElementById('increase-button').addEventListener('click', increaseTime);
+  const startButton = document.getElementById('start-button');
+  const resetButton = document.getElementById('reset-button');
+  const decreaseButton = document.getElementById('decrease-button');
+  const increaseButton = document.getElementById('increase-button');
 const catContainer = document.getElementById('cat-container');
 let timerInterval;
 let timerIsRunning = false;
 let defaultTime = 25;
+
+// Add event listeners
+startButton.addEventListener('click', startTimer);
+resetButton.addEventListener('click', resetTimer);
+decreaseButton.addEventListener('click', decreaseTime);
+increaseButton.addEventListener('click', increaseTime);
 
 // Set default time on page load
 timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
@@ -95,7 +101,6 @@ function increaseTime() {
 function openSettings() {
   // TODO: Implement the settings page
 }
-});
   
   
 // add an event listener for "your-cafe-button" that opens your-cafe.html in a new tab
@@ -108,6 +113,6 @@ document.getElementById("your-cafe-button").addEventListener("click", function()
       win.location.href = "your-cafe.html";
     });
   });
-  
+});
 
   
