@@ -25,9 +25,10 @@
           .then(response => response.json())
           .then(data => {
             const catImageUrl = `https://cataas.com/cat/${data.id}`;
-            // Use the cat image URL to display the cat image
-            // (e.g. create an <img> element with the src attribute set to catImageUrl)
-          })
+            const img = document.createElement('img');
+            img.src = catImageUrl;
+            document.getElementById('cat-container').appendChild(img);
+         })
           .catch(error => {
             console.log(error);
           });
