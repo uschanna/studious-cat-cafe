@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "manifest_version": 3,
   "description": "get rewarded with cats for studying",
-  "permissions": ["storage", "scripting", "contextMenus"],
+  "permissions": ["storage", "scripting", "contextMenus", "declarativeNetRequest"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
