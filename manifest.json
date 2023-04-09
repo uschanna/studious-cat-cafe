@@ -23,22 +23,37 @@
     "default_title": "studious cat cafe",
     "default_popup": "popup.html"
   },
-  "declarative_content": {
-    "page_redirection": {
-      "conditions": [
-        {
-          "pageUrl": {},
-          "resourceTypes": ["script"],
-          "actions": [
-            {
-              "type": "redirect",
-              "redirect": {
-                "url": "popup.html"
-              }
-            }
-          ]
+  "scripting": {
+    "executeScript": [
+      {
+        "matches": ["<all_urls>"],
+        "script": {
+          "sources": ["content.js"]
         }
-      ]
-    }
+      }
+    ]
+  },
+  "declarativeNetRequest": {
+    "ruleResources": [
+      {
+        "id": "block_ads",
+        "enabled": true,
+        "path": "rules/block_ads.json"
+      }
+    ],
+    "rules": [
+      {
+        "id": 1,
+        "priority": 1,
+        "action": {
+          "type": "redirect",
+          "redirect": {"extensionPath": "/popup.html"}
+        },
+        "condition": {
+          "urlFilter": "*://*/*",
+          "resourceTypes": ["script"]
+        }
+      }
+    ]
   }
 }
