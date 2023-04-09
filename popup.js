@@ -5,6 +5,7 @@ const timer = document.getElementById('timer');
   const resetButton = document.getElementById('reset-button');
   const decreaseButton = document.getElementById('decrease-button');
   const increaseButton = document.getElementById('increase-button');
+
 const catContainer = document.getElementById('cat-container');
 let timerInterval;
 let timerIsRunning = false;
@@ -27,6 +28,7 @@ function startTimer() {
   decreaseButton.disabled = true;
   increaseButton.disabled = true;
 
+
   let minutes = parseInt(timer.textContent.split(':')[0]);
   let seconds = parseInt(timer.textContent.split(':')[1]);
   let totalSeconds = minutes * 60 + seconds;
@@ -39,11 +41,12 @@ function startTimer() {
       decreaseButton.disabled = false;
       increaseButton.disabled = false;
 
-      // Call the Robohash API to generate a random cat image
-      fetch('https://robohash.org/cat.png?size=200x200')
-        .then(response => {
+      // Call the Cataas API to generate a random cat image
+      fetch('https://cataas.com/cat?json=true')
+        .then(response => response.json())
+        .then(data => {
           const img = document.createElement('img');
-          img.src = response.url;
+          img.src = `https://cataas.com${data.url}`;
           img.classList.add('pixelated');
           catContainer.appendChild(img);
 
@@ -51,7 +54,7 @@ function startTimer() {
           const card = document.createElement('div');
           card.classList.add('card');
           card.innerHTML = `
-            <img src="${response.url}" class="pixelated">
+            <img src="${img.src}" class="pixelated">
             <p>Time: ${defaultTime} minutes</p>
             <p>Date: ${new Date().toLocaleDateString()}</p>
           `;

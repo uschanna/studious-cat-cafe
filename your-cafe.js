@@ -1,16 +1,13 @@
-// Retrieve the last study time and display it in the footer
-chrome.storage.local.get('lastStudyTime', function(data) {
-    document.getElementById('last-study-time').textContent = data.lastStudyTime;
-  });
+document.addEventListener('DOMContentLoaded', () => {
+    const cardContainer = document.getElementById('card-container');
   
-  // Retrieve the saved cat images and add them to the container
-  chrome.storage.local.get('savedCats', function(data) {
-    var savedCats = data.savedCats || [];
-  
-    savedCats.forEach(function(catUrl) {
-      var img = document.createElement('img');
-      img.src = catUrl;
-      document.getElementById('saved-cats-container').appendChild(img);
+    chrome.storage.local.get(['cards'], data => {
+      const cards = data.cards || [];
+      cards.forEach(card => {
+        const row = document.createElement('tr');
+        row.innerHTML = card;
+        cardContainer.appendChild(row);
+      });
     });
   });
   
