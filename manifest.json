@@ -1,22 +1,18 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "studious cat cafe",
   "version": "0.1.0",
   "description": "get rewarded with cats for studying",
   "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
+  "host_permissions": ["<all_urls>"],
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "background.js"
   },
-  "web_accessible_resources": {
-    "matches": ["<all_urls>"],
-    "resources": ["settings.html"]
-  },
-  "icons": {
-    "16": "assets/ext-icon.png",
-    "24": "assets/ext-icon.png",
-    "32": "assets/ext-icon.png"
-  },
-  "browser_action": {
+  "web_accessible_resources": [{
+    "resources": ["settings.html"],
+    "matches": ["<all_urls>"]
+  }],
+  "action": {
     "default_icon": "assets/ext-icon.png",
     "default_title": "studious cat cafe",
     "default_popup": "popup.html"
