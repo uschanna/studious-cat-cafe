@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 // Define variables
 const timer = document.getElementById('timer');
 const startButton = document.getElementById('start-button').addEventListener('click', startTimer);
@@ -15,10 +16,10 @@ timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
 // Function to start the timer
 function startTimer() {
   timerIsRunning = true;
-  //startButton.disabled = true;
-  //resetButton.disabled = false;
-  //decreaseButton.disabled = true;
-  //increaseButton.disabled = true;
+  startButton.disabled = true;
+  resetButton.disabled = false;
+  decreaseButton.disabled = true;
+  increaseButton.disabled = true;
 
   let minutes = parseInt(timer.textContent.split(':')[0]);
   let seconds = parseInt(timer.textContent.split(':')[1]);
@@ -94,7 +95,7 @@ function increaseTime() {
 function openSettings() {
   // TODO: Implement the settings page
 }
-
+});
   
   
 // add an event listener for "your-cafe-button" that opens your-cafe.html in a new tab
