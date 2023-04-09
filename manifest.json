@@ -5,7 +5,10 @@
   "description": "get rewarded with cats for studying",
   "permissions": ["storage", "contextMenus"],
   "host_permissions": ["<all_urls>"],
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self'; object-src 'self'"
+  },
   "background": {
     "service_worker": "background.js"
   },
