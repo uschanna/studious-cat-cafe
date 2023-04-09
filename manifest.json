@@ -9,8 +9,8 @@
   },
   "web_accessible_resources": [
     {
-      "matches": ["<all_urls>"],
-      "resources": ["settings.html"]
+      "matches": "<all_urls>",
+      "resources": "settings.html"
     }
   ],
   "icons": {
