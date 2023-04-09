@@ -1,10 +1,27 @@
-<link href="popup.css" rel="stylesheet" type="text/css" />
-<script type="module" src="popup.js"></script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Pomodoro Timer</title>
+    <style>
+      /* Add your styles here */
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <button id="settings-button">settings</button>
+        <button id="your-cafe-button">your cafe</button>
+      </nav>
+    </header>
+    <div id="timer-container">
+      <button id="decrease-button">-5 min</button>
+      <h1 id="timer">25:00</h1>
+      <button id="increase-button">+5 min</button>
+      <button id="start-button">Start</button>
+      <button id="reset-button">Reset</button>
+    </div>
 
-<div class="container">
-  <div>
-    <div class="title">Your bookmarks for this video</div>
-
-    <div class="bookmarks" id="bookmarks"></div>
-  </div>
-</div>
+    <script src="popup.js"></script>
+  </body>
+</html>

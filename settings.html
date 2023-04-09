@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>settings</title>
+</head>
+<body>
+    <form id="settings-form">
+        <label for="blocked-site-input">Add a site to block:</label>
+        <input type="text" id="blocked-site-input">
+        <button type="submit">Add</button>
+      </form>
+      <ul id="blocked-site-list"></ul>
+ 
+      <script>
+        const form = document.getElementById("settings-form");
+    const blockedSiteInput = document.getElementById("blocked-site-input");
+    const blockedSiteList = document.getElementById("blocked-site-list");
+    
+    function updateBlockedSites() {
+      chrome.storage.sync.get("blockedSites", function(data) {
+        const blockedSites = data.blockedSites || [];
+        blockedSiteList.innerHTML = "";
+        blockedSites.forEach(function(site) {
+          const li = document.createElement("li");
+          li.textContent = site;
+          blockedSiteList.appendChild(li);
+        });
+      });
+    }
+    
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const url = blockedSiteInput.value.trim();
+      if (url) {
+        chrome.storage.sync.get("blockedSites", function(data) {
+          const blockedSites = data.blockedSites || [];
+          if (!blockedSites.includes(url)) {
+            blockedSites.push(url);
+            chrome.storage.sync.set({blockedSites: blockedSites}, function() {
+              updateBlockedSites();
+              blockedSiteInput.value = "";
+            });
+          }
+        });
+      }
+    });
+    
+    updateBlockedSites();
+    </script>
+</body>
+</html>
