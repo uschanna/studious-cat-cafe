@@ -27,6 +27,7 @@ function startTimer() {
   resetButton.disabled = false;
   decreaseButton.disabled = true;
   increaseButton.disabled = true;
+  testButton.disabled = true;
 
 
   let minutes = parseInt(timer.textContent.split(':')[0]);
@@ -88,15 +89,15 @@ function resetTimer() {
   catContainer.innerHTML = '';
 }
 
-// Function to decrease the time by 5 minutes
+// Function to decrease the time by 1 minute
 function decreaseTime() {
-  defaultTime = Math.max(defaultTime - 5, 5);
+  defaultTime = Math.max(defaultTime - 1, 1);
   timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
 }
 
-// Function to increase the time by 5 minutes
+// Function to increase the time by 5 minute
 function increaseTime() {
-  defaultTime += 5;
+  defaultTime += 1;
   timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
 }
 
