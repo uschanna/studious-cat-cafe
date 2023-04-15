@@ -50,13 +50,13 @@ h1 {
   color: #AAA785;
 }
 
-.outer-box {
+#outer-box {
   border: 3px solid greenyellow;
   width: 300px;
   height: 400px;
 }
 
-.timer-section {
+#timer-section {
   display: flex;
   align-items: center;
   justify-content: center;
