@@ -22,12 +22,14 @@ timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
 
 
 function changeImage() {
-  if (document.getElementById("imgClick").src == "assets/cat-awake.svg"){
-      document.getElementById("imgClick").src = "assets/cat-asleep.svg";
+  const img = document.getElementById("imgClick");
+  if (img.src.endsWith("cat-awake.svg")) {
+    img.src = "assets/cat-asleep.svg";
   } else {
-      document.getElementById("imgClick").src = "assets/cat-awake.svg";
+    img.src = "assets/cat-awake.svg";
   }
 }
+
 
 // Function to start the timer
 function startTimer() {
@@ -36,6 +38,7 @@ function startTimer() {
   resetButton.disabled = false;
   decreaseButton.disabled = true;
   increaseButton.disabled = true;
+  // change image to "cat-asleep.svg" when timer starts
   changeImage();
 
   let minutes = parseInt(timer.textContent.split(':')[0]);
@@ -49,6 +52,8 @@ function startTimer() {
       startButton.disabled = false;
       decreaseButton.disabled = false;
       increaseButton.disabled = false;
+  // change image to "cat-awake.svg" when timer is done
+  changeImage();
 
       // Call the Cataas API to generate a random cat image
       fetch('https://cataas.com/cat?json=true')
