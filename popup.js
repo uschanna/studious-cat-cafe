@@ -20,6 +20,15 @@ increaseButton.addEventListener('click', increaseTime);
 // Set default time on page load
 timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
 
+
+function changeImage() {
+  if (document.getElementById("imgClick").src == "assets/cat-awake.svg"){
+      document.getElementById("imgClick").src = "assets/cat-asleep.svg";
+  } else {
+      document.getElementById("imgClick").src = "assets/cat-awake.svg";
+  }
+}
+
 // Function to start the timer
 function startTimer() {
   timerIsRunning = true;
@@ -118,11 +127,4 @@ document.getElementById("your-cafe-button").addEventListener("click", function()
   });
 });
 
-function changeImage() {
-  if (document.getElementById("imgClick").src == "assets/cat-awake.svg"){
-      document.getElementById("imgClick").src = "assets/cat-asleep.svg";
-  } else {
-      document.getElementById("imgClick").src = "assets/cat-awake.svg";
-  }
-}
   
