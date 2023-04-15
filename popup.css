@@ -1,17 +1,6 @@
 button {
-  padding-bottom: 12px;
+  border: 0px;
   border-bottom: 1px solid black;
-  cursor: pointer;
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Add hover effects to the button */
-button:hover {
-  color: #AAA785;
-  transform: translateY(-1px);
 }
 
 body {
