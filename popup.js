@@ -40,6 +40,15 @@ function startTimer() {
       startButton.disabled = false;
       decreaseButton.disabled = false;
       increaseButton.disabled = false;
+      
+    // Get the background page and run the timer from there
+    chrome.extension.getBackgroundPage().timerInterval = setInterval(() => {
+      if (totalSeconds <= 0) {
+        clearInterval(timerInterval);
+        timerIsRunning = false;
+        startButton.disabled = false;
+        decreaseButton.disabled = false;
+        increaseButton.disabled = false;
 
       // Call the Cataas API to generate a random cat image
       fetch('https://cataas.com/cat?json=true')
