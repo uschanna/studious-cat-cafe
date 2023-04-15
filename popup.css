@@ -1,21 +1,23 @@
 button {
-  padding: 12px 24px;
-  background-color: #F5D5CB;
-  color: #754F44;
-  border: none;
-  border-radius: 20px;
+  padding-bottom: 12px;
+  border-bottom: #000000;
   cursor: pointer;
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
 }
 
 /* Add hover effects to the button */
 button:hover {
-  background-color: #754F44;
-  color: #F5D5CB;
+  color: #AAA785;
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body {
+  width: 400px;
+  height: 400px;
+  background-color: #D5CABA;
+  font-family: 'VT323', sans-serif;
 }
