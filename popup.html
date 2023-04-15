@@ -8,23 +8,24 @@
     <title>studious cat cafe</title>
   </head>
   <body>
-    <header>
+    <div id="outer-box">
       <nav>
         <button id="your-cafe-button">YOUR CAFE</button>
       </nav>
-    </header>
-    <div>
       <h1>studious cat cafe</h1>
-      <p id="timer">25:00</p>
-      <div id="button-container">
-        <button id="start-button">START</button>
-        <button id="reset-button">RESET</button>
-        <button id="decrease-button">-5</button>
-        <button id="increase-button">+5</button>
+      <div id="timer-section">
+        <img alt="" src="assets/cat-awake.png" 
+        style="height: 200px; width: 200px" id="imgClick" onclick="changeImage()"/> 
+        <p id="timer">25:00</p>
+        <div id="button-container">
+          <button id="start-button">START</button>
+          <button id="reset-button">RESET</button>
+          <button id="decrease-button">-5</button>
+          <button id="increase-button">+5</button>
+        </div>
+        <div id="cat-container" class="card-container"></div>
       </div>
-      <div id="cat-container" class="card-container"></div>
     </div>
-
     <script src="popup.js"></script>
   </body>
 </html>
