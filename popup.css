@@ -52,7 +52,11 @@ h1 {
 
 .outer-box {
   border: 3px solid greenyellow;
-  margin: 52px;
+  width: 80%;
+  width: 80%;
+}
+
+.timer-section {
   display: flex;
   align-items: center;
   justify-content: center;
