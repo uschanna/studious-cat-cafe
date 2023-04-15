@@ -20,17 +20,6 @@ increaseButton.addEventListener('click', increaseTime);
 // Set default time on page load
 timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
 
-
-function changeImage() {
-  const img = document.getElementById("imgClick");
-  if (img.src.endsWith("cat-awake.svg")) {
-    img.src = "assets/cat-asleep.svg";
-  } else {
-    img.src = "assets/cat-awake.svg";
-  }
-}
-
-
 // Function to start the timer
 function startTimer() {
   timerIsRunning = true;
@@ -93,6 +82,8 @@ function startTimer() {
 
 // Function to reset the timer
 function resetTimer() {
+  const img = document.getElementById("imgClick");
+  img.src='assets/cat-awake.svg'
   clearInterval(timerInterval);
   timerIsRunning = false;
   startButton.disabled = false;
