@@ -1,7 +1,6 @@
 button {
   padding-bottom: 12px;
   border-bottom: 1px solid black;
-  border-color: black;
   cursor: pointer;
   font-size: 16px;
   text-transform: uppercase;
