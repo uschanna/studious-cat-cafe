@@ -118,4 +118,11 @@ document.getElementById("your-cafe-button").addEventListener("click", function()
   });
 });
 
+function changeImage() {
+  if (document.getElementById("imgClick").src == "assets/cat-awake.svg"){
+      document.getElementById("imgClick").src = "assets/cat-asleep.svg";
+  } else {
+      document.getElementById("imgClick").src = "assets/cat-awake.svg";
+  }
+}
   
