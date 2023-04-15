@@ -40,16 +40,21 @@ function startTimer() {
       startButton.disabled = false;
       decreaseButton.disabled = false;
       increaseButton.disabled = false;
-      
-    // Get the background page and run the timer from there
-    chrome.extension.getBackgroundPage().timerInterval = setInterval(() => {
+
+        // Listen for a message from the background script with the remaining time
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === 'updateTimer') {
+      totalSeconds = message.remainingTime;
+      minutes = Math.floor(totalSeconds / 60);
+      seconds = totalSeconds % 60;
+      timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
       if (totalSeconds <= 0) {
-        clearInterval(timerInterval);
         timerIsRunning = false;
         startButton.disabled = false;
         decreaseButton.disabled = false;
         increaseButton.disabled = false;
-
+        
       // Call the Cataas API to generate a random cat image
       fetch('https://cataas.com/cat?json=true')
         .then(response => response.json())
