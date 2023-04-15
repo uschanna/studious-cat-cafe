@@ -5,7 +5,6 @@ const timer = document.getElementById('timer');
   const resetButton = document.getElementById('reset-button');
   const decreaseButton = document.getElementById('decrease-button');
   const increaseButton = document.getElementById('increase-button');
-  const testButton = document.getElementById('test-button');
 
 const catContainer = document.getElementById('cat-container');
 let timerInterval;
@@ -17,7 +16,6 @@ startButton.addEventListener('click', startTimer);
 resetButton.addEventListener('click', resetTimer);
 decreaseButton.addEventListener('click', decreaseTime);
 increaseButton.addEventListener('click', increaseTime);
-testButton.addEventListener('click', testButton);
 
 // Set default time on page load
 timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
@@ -29,7 +27,6 @@ function startTimer() {
   resetButton.disabled = false;
   decreaseButton.disabled = true;
   increaseButton.disabled = true;
-  testButton.disabled = true;
 
 
   let minutes = parseInt(timer.textContent.split(':')[0]);
@@ -101,11 +98,6 @@ function decreaseTime() {
 function increaseTime() {
   defaultTime += 5;
   timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
-}
-
-// Function to test timer quickly (1 min)
-function testButton() {
-  setTimer(1);
 }
 
 // Function to open the settings page
