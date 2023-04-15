@@ -27,7 +27,7 @@ function startTimer() {
   resetButton.disabled = false;
   decreaseButton.disabled = true;
   increaseButton.disabled = true;
-
+  changeImage();
 
   let minutes = parseInt(timer.textContent.split(':')[0]);
   let seconds = parseInt(timer.textContent.split(':')[1]);
