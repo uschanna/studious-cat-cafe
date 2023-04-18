@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.disabled = false;
     decreaseButton.disabled = true;
     increaseButton.disabled = true;
-  
+    // change image to "cat-asleep.svg" when timer starts
     const img = document.getElementById("imgClick");
     img.src='assets/cat-asleep.svg'
   
@@ -43,25 +43,22 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.disabled = false;
         decreaseButton.disabled = false;
         increaseButton.disabled = false;
-  
+        // change image to "cat-awake.svg" when timer is done
         img.src='assets/cat-awake.svg'
   
         // Call the Cataas API to generate a random cat image
-        fetch('https://cataas.com/cat/says/timer%20iz%20done?width=100&height=100&json=true')
+        fetch('https://cataas.com/cat/says/timer%20iz%20done?width=400&height=400&json=true')
           .then(response => response.json())
           .then(data => {
-            const img = document.createElement('img');
-            img.src = `https://cataas.com${data.url}`;
-  
             // Open new page with the image and buttons to return home and go to your-cafe.html
-            const popup = window.open('', 'Timer Done', 'width=480,height=300');
+            const popup = window.open('', 'Timer Done', 'width=4800,height=500');
             popup.document.write(`
               <html>
                 <head>
                   <title>Timer Done</title>
                 </head>
                 <body>
-                  <img id="popup-image" src="" class="pixelated">
+                  <img id="popup-image" src="${data.url}" class="pixelated">
                   <button onclick="window.close()">Return to Home</button>
                   <button onclick="location.href='your-cafe.html'">Go to Your Cafe</button>
                   <script>
@@ -69,19 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     img.addEventListener('load', () => {
                       window.resizeTo(img.width + 20, img.height + 80);
                     });
-                    img.src = '${img.src}';
                   </script>
                 </body>
               </html>
             `);
-            const popupImg = popup.document.getElementById('popup-image');
-            popupImg.src = img.src;
   
             // Save the image, time, and date to your-cafe.html
             const card = document.createElement('div');
             card.classList.add('card');
             card.innerHTML = `
-              <img src="${img.src}" class="pixelated">
+              <img src="${data.url}" class="pixelated">
               <p>Time: ${defaultTime} minutes</p>
               <p>Date: ${new Date().toLocaleDateString()}</p>
             `;
@@ -102,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, 1000);
   }
+  
   
   
   
