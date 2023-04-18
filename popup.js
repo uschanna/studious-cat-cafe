@@ -1,24 +1,27 @@
+
 document.addEventListener('DOMContentLoaded', () => {
-  const timerDisplay = document.getElementById('timer');
-  const startButton = document.getElementById('start-button');
-  const resetButton = document.getElementById('reset-button');
-  const decreaseButton = document.getElementById('decrease-button');
-  const increaseButton = document.getElementById('increase-button');
-  const imgClick = document.getElementById('imgClick');
-  const outerBox = document.getElementById('outer-box');
+  // Define variables
+  const timer = document.getElementById('timer');
+    const startButton = document.getElementById('start-button');
+    const resetButton = document.getElementById('reset-button');
+    const decreaseButton = document.getElementById('decrease-button');
+    const increaseButton = document.getElementById('increase-button');
+  
+  const catContainer = document.getElementById('cat-container');
   let timerInterval;
-  let totalSeconds = 1500;
   let timerIsRunning = false;
-  const alarmName = 'pomodoro';
+  let defaultTime = 25;
   
-  chrome.runtime.getBackgroundPage(backgroundPage => {
-    if (backgroundPage.alarm) {
-      totalSeconds = Math.round((backgroundPage.alarm.scheduledTime - Date.now()) / 1000);
-      timerDisplay.innerText = `${Math.floor(totalSeconds / 60).toString().padStart(2, '0')}:${(totalSeconds % 60).toString().padStart(2, '0')}`;
-    }
-  });
+  // Add event listeners
+  startButton.addEventListener('click', startTimer);
+  resetButton.addEventListener('click', resetTimer);
+  decreaseButton.addEventListener('click', decreaseTime);
+  increaseButton.addEventListener('click', increaseTime);
   
+  // Set default time on page load
+  timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
   
+  // Function to start the timer
   function startTimer() {
     timerIsRunning = true;
     startButton.disabled = true;
@@ -28,14 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // change image to "cat-asleep.svg" when timer starts
     const img = document.getElementById("imgClick");
     img.src='assets/cat-asleep.svg'
-    startPomodoro();
-  }
   
-  function startPomodoro() {
     let minutes = parseInt(timer.textContent.split(':')[0]);
     let seconds = parseInt(timer.textContent.split(':')[1]);
     let totalSeconds = minutes * 60 + seconds;
-
+  
     timerInterval = setInterval(() => {
       if (totalSeconds <= 0) {
         clearInterval(timerInterval);
@@ -43,9 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.disabled = false;
         decreaseButton.disabled = false;
         increaseButton.disabled = false;
-        // change image to "cat-awake.svg" when timer is done
-        img.src='assets/cat-awake.svg'
-
+    // change image to "cat-awake.svg" when timer is done
+    img.src='assets/cat-awake.svg'
+  
         // Call the Cataas API to generate a random cat image
         fetch('https://cataas.com/cat?json=true')
           .then(response => response.json())
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img.src = `https://cataas.com${data.url}`;
             img.classList.add('pixelated');
             catContainer.appendChild(img);
-
+  
             // Save the image, time, and date to your-cafe.html
             const card = document.createElement('div');
             card.classList.add('card');
@@ -81,48 +81,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
   
+  // Function to reset the timer
   function resetTimer() {
+    const img = document.getElementById("imgClick");
+    img.src='assets/cat-awake.svg'
     clearInterval(timerInterval);
     timerIsRunning = false;
     startButton.disabled = false;
+    resetButton.disabled = true;
     decreaseButton.disabled = false;
     increaseButton.disabled = false;
-    totalSeconds = 1500;
-    timerDisplay.innerText = "25:00";
-    imgClick.src = "assets/cat-awake.svg";
-    outerBox.style.border = "";
-    chrome.alarms.clear(alarmName);
+    timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
+    catContainer.innerHTML = '';
   }
   
-  function increaseTime() {
-    if (!timerIsRunning && totalSeconds < 3600) {
-      totalSeconds += 300;
-      timerDisplay.innerText = `${Math.floor(totalSeconds / 60).toString().padStart(2, '0')}:${(totalSeconds % 60).toString().padStart(2, '0')}`;
-    }
-  }
-  
+  // Function to decrease the time by 5 minutes
   function decreaseTime() {
-    if (!timerIsRunning && totalSeconds > 300) {
-      totalSeconds -= 300;
-      timerDisplay.innerText = `${Math.floor(totalSeconds / 60).toString().padStart(2, '0')}:${(totalSeconds % 60).toString().padStart(2, '0')}`;
-    }
+    defaultTime = Math.max(defaultTime - 5, 5);
+    timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
   }
   
-  startButton.addEventListener("click", startTimer);
-  resetButton.addEventListener("click", resetTimer);
-  decreaseButton.addEventListener("click", decreaseTime);
-  increaseButton.addEventListener("click", increaseTime);
-   
-// add an event listener for "your-cafe-button" that opens your-cafe.html in a new tab
-//document.getElementById("your-cafe-button").addEventListener("click", function() {
-//    chrome.tabs.create({url: "your-cafe.html"});
-//});
-
-document.getElementById("your-cafe-button").addEventListener("click", function() {
-    chrome.extension.getViews({type: "popup"}).forEach(function(win) {
-      win.location.href = "your-cafe.html";
+  // Function to increase the time by 5 minutes
+  function increaseTime() {
+    defaultTime += 5;
+    timer.textContent = `${defaultTime.toString().padStart(2, '0')}:00`;
+  }
+  
+  // Function to open the settings page
+  function openSettings() {
+    // TODO: Implement the settings page
+  }
+    
+    
+  // add an event listener for "your-cafe-button" that opens your-cafe.html in a new tab
+  //document.getElementById("your-cafe-button").addEventListener("click", function() {
+  //    chrome.tabs.create({url: "your-cafe.html"});
+  //});
+  
+  document.getElementById("your-cafe-button").addEventListener("click", function() {
+      chrome.extension.getViews({type: "popup"}).forEach(function(win) {
+        win.location.href = "your-cafe.html";
+      });
     });
   });
-});
-
+  
+    
   

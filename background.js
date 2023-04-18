@@ -1,42 +1,25 @@
-const alarmName = 'pomodoro';
+let timerInterval;
+let remainingTime;
 
-function handleAlarm() {
-  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-    chrome.scripting.executeScript({
-      target: { tabId: tabs[0].id },
-      function: startTimer
-    });
-  });
-}
-
-function createAlarm() {
-  chrome.alarms.create(alarmName, {
-    delayInMinutes: 25,
-    periodInMinutes: 25
-  });
-}
-
-chrome.runtime.onInstalled.addListener(details => {
-  if (details.reason === 'install') {
-    createAlarm();
-  } else if (details.reason === 'update') {
-    chrome.alarms.clearAll(() => {
-      createAlarm();
-    });
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'startTimer') {
+    remainingTime = message.totalSeconds;
+    timerInterval = setInterval(() => {
+      remainingTime--;
+      if (remainingTime <= 0) {
+        clearInterval(timerInterval);
+        // Send a message to the popup script with the remaining time
+        chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+          chrome.tabs.sendMessage(tabs[0].id, {action: 'updateTimer', remainingTime});
+        });
+      }
+    }, 1000);
   }
 });
 
-chrome.alarms.onAlarm.addListener(alarm => {
-  if (alarm.name === alarmName) {
-    handleAlarm();
-  }
-});
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'GET_ALARM') {
-    chrome.alarms.get(alarmName, alarm => {
-      sendResponse({ alarm: alarm });
-    });
-  }
-  return true;
+
+
+chrome.action.onClicked.addListener(function() {
+  chrome.action.setPopup({popup: "popup.html"});
 });
