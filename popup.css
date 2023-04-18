@@ -15,6 +15,9 @@ body {
   height: 500px;
   background-color: #D5CABA;
   font-family: 'VT323', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-container {
@@ -54,11 +57,6 @@ h1 {
   border: 3px solid greenyellow;
   width: 80%;
   height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-
 }
 
 #timer-section {
