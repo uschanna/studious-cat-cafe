@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     img.src='assets/cat-awake.svg'
   
         // Call the Cataas API to generate a random cat image
-          fetch('https://cataas.com/cat/says/timer%20iz%20done?width=100&height=100&json=true')
+          fetch('https://cataas.com/cat/says/timer%20iz%20done?width=300&height=200&json=true')
           .then(response => response.json())
           .then(data => {
             const img = document.createElement('img');
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             timer.textContent = 'Done!'
             // show "your-cafe-button" when timer is done
             document.getElementById("your-cafe-button").style.display = "block";
-            
+
             // Save the image, time, and date to your-cafe.html
             const card = document.createElement('div');
             card.classList.add('card');

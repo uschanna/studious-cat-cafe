@@ -4,54 +4,47 @@
   <meta charset="UTF-8">
   <title>Your Cafe</title>
   <style>
-    body {
-      font-family: 'VT323', monospace;
-      background-color: #f5f5f5;
-      width: 800px;
-      height: 500px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      color: #333;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th {
-      text-align: left;
-      padding: 10px;
-      background-color: #333;
-      color: #fff;
-    }
-    td {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-    }
+/*all the images are the same size and are viewed in a grid*/
     .card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
     }
-    .card__date {
-      font-size: 1.5em;
-      color: #333;
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-    .card__duration {
-      font-size: 1.5em;
-      color: #333;
+    .card .date {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 5px;
     }
-    .card__cat {
-      font-size: 1.5em;
-      color: #333;
+    .card .duration {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 5px;
     }
-    #card-container {
-      display: flex;
-      flex-direction: column;
-      width: 100px;
-      height: 100px;
+    .card .cat {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 5px;
     }
+    
+
 
   </style>
 </head>
