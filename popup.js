@@ -68,8 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
               chrome.storage.local.set({cards});
             });
   
-            // Open new page with the image and buttons to return home and go to your-cafe.html
-            const popup = window.open('timer-done.html', 'Timer Done', 'width=480,height=500');
+            // change page to timer-done.html when timer is done
+            chrome.extension.getViews({type: "popup"}).forEach(function(win) {
+              win.location.href = "timer-done.html";
+            });
           })
           .catch(error => {
             console.log(error);
