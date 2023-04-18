@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     img.src='assets/cat-awake.svg'
   
         // Call the Cataas API to generate a random cat image
-          fetch('https://cataas.com/cat/says/timer%20iz%20done?width=300&height=200&json=true')
+          fetch('https://cataas.com/cat/says/timer%20iz%20done?width=300&height=200&size=50&json=true')
           .then(response => response.json())
           .then(data => {
             const img = document.createElement('img');
