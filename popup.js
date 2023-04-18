@@ -43,16 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.disabled = false;
         decreaseButton.disabled = false;
         increaseButton.disabled = false;
-    // change image to "cat-awake.svg" when timer is done
-    img.src='assets/cat-awake.svg'
+        // change image to "cat-awake.svg" when timer is done
+        img.src='assets/cat-awake.svg'
   
         // Call the Cataas API to generate a random cat image
-        fetch('https://cataas.com/cat/says/timer%20iz%20done?width=100px&height=100px&json=true')
+        fetch('https://cataas.com/cat/says/timer%20iz%20done?width=100&height=100&json=true')
           .then(response => response.json())
           .then(data => {
             const img = document.createElement('img');
             img.src = `https://cataas.com${data.url}`;
-            img.classList.add('pixelated');
             catContainer.appendChild(img);
   
             // Save the image, time, and date to your-cafe.html
@@ -68,6 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
               cards.push(card.outerHTML);
               chrome.storage.local.set({cards});
             });
+  
+            // Open new page with the image and buttons to return home and go to your-cafe.html
+            const popup = window.open('timer-done.html', 'Timer Done', 'width=400,height=400');
+            popup.document.write(`
+              <img src="${img.src}" class="pixelated">
+              <button onclick="window.close()">Return to Home</button>
+              <button onclick="location.href='your-cafe.html'">Go to Your Cafe</button>
+            `);
           })
           .catch(error => {
             console.log(error);
@@ -80,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, 1000);
   }
+  
   
   // Function to reset the timer
   function resetTimer() {

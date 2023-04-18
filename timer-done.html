@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Timer Done</title>
+</head>
+<body>
+	<h1>Your Timer is Done!</h1>
+	<img src="" id="catImage" class="pixelated">
+	<div>
+		<button onclick="goToHome()">Return to Home</button>
+		<button onclick="goToYourCafe()">Go to Your Cafe</button>
+	</div>
+	<script>
+		const catImage = document.getElementById('catImage');
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const imageUrl = urlParams.get('imageUrl');
+		catImage.src = imageUrl;
+
+		function goToHome() {
+			window.location.href = 'index.html';
+		}
+
+		function goToYourCafe() {
+			window.location.href = 'your-cafe.html';
+		}
+	</script>
+</body>
+</html>
