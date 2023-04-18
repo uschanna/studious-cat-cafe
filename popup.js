@@ -54,7 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
             img.src = `https://cataas.com${data.url}`;
             img.classList.add('pixelated');
             catContainer.appendChild(img);
-  
+            timer.textContent = 'Done!'
+            // show "your-cafe-button" when timer is done
+            document.getElementById("your-cafe-button").style.display = "block";
+            
             // Save the image, time, and date to your-cafe.html
             const card = document.createElement('div');
             card.classList.add('card');
