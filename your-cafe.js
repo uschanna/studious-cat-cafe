@@ -11,3 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
+  // Function to clear all the cards
+  function clearCards() {
+    chrome.storage.local.set({cards: []}, () => {
+      cardContainer.innerHTML = '';
+    });
+  }
+
+  // empty state if there are no cards
+  if (cardContainer.innerHTML === '') {
+    cardContainer.innerHTML = `
+      <div class="empty-state">
+        <img src="assets/empty-state.svg" alt="Empty State">
+        <p>There are no saved cards yet.</p>
+      </div>
+    `;
+  }
