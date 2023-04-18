@@ -28,10 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.disabled = false;
     decreaseButton.disabled = true;
     increaseButton.disabled = true;
-  
     // change image to "cat-asleep.svg" when timer starts
     const img = document.getElementById("imgClick");
-    img.src = 'assets/cat-asleep.svg'
+    img.src='assets/cat-asleep.svg'
   
     let minutes = parseInt(timer.textContent.split(':')[0]);
     let seconds = parseInt(timer.textContent.split(':')[1]);
@@ -44,21 +43,23 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.disabled = false;
         decreaseButton.disabled = false;
         increaseButton.disabled = false;
-  
-        // change image to "cat-awake.svg" when timer is done
-        img.src = 'assets/cat-awake.svg'
+    // change image to "cat-awake.svg" when timer is done
+    img.src='assets/cat-awake.svg'
   
         // Call the Cataas API to generate a random cat image
         fetch('https://cataas.com/cat/says/timer%20iz%20done?width=100&height=100&json=true')
           .then(response => response.json())
           .then(data => {
-            const imgSrc = `https://cataas.com${data.url}`;
+            const img = document.createElement('img');
+            img.src = `https://cataas.com${data.url}`;
+            img.classList.add('pixelated');
+            catContainer.appendChild(img);
   
             // Save the image, time, and date to your-cafe.html
             const card = document.createElement('div');
             card.classList.add('card');
             card.innerHTML = `
-              <img src="${imgSrc}" class="pixelated">
+              <img src="${img.src}" class="pixelated">
               <p>Time: ${defaultTime} minutes</p>
               <p>Date: ${new Date().toLocaleDateString()}</p>
             `;
@@ -66,11 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
               const cards = data.cards || [];
               cards.push(card.outerHTML);
               chrome.storage.local.set({cards});
-            });
-  
-            // change page to timer-done.html when timer is done
-            chrome.extension.getViews({type: "popup"}).forEach(function(win) {
-              win.location.href = "timer-done.html";
             });
           })
           .catch(error => {
@@ -84,8 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, 1000);
   }
-  
-  
   
   // Function to reset the timer
   function resetTimer() {
