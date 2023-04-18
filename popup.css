@@ -52,8 +52,8 @@ h1 {
 
 #outer-box {
   border: 3px solid greenyellow;
-  width: 300px;
-  height: 400px;
+  width: 80%;
+  height: 80%;
 }
 
 #timer-section {
