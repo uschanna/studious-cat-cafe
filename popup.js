@@ -68,14 +68,29 @@ document.addEventListener('DOMContentLoaded', () => {
               chrome.storage.local.set({cards});
             });
   
-            // Open new page with the image and buttons to return home and go to your-cafe.html
-            const popup = window.open('timer-done.html', 'Timer Done', 'width=400,height=400');
-            popup.document.write(`
-              <img src="${img.src}" class="pixelated">
-              <button onclick="window.close()">Return to Home</button>
-              <button onclick="location.href='your-cafe.html'">Go to Your Cafe</button>
-            `);
-          })
+
+    // Open new page with the image and buttons to return home and go to your-cafe.html
+    const popup = window.open('', 'Timer Done', 'width=4800,height=500');
+    popup.document.write(`
+      <html>
+        <head>
+          <title>Timer Done</title>
+        </head>
+        <body>
+          <img id="popup-image" src="" class="pixelated">
+          <button onclick="window.close()">Return to Home</button>
+          <button onclick="location.href='your-cafe.html'">Go to Your Cafe</button>
+          <script>
+            const img = document.getElementById('popup-image');
+            img.addEventListener('load', () => {
+              window.resizeTo(img.width + 20, img.height + 80);
+            });
+            img.src = '${img.src}';
+          </script>
+        </body>
+      </html>
+    `);
+  })
           .catch(error => {
             console.log(error);
           });
