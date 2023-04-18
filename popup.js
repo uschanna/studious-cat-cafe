@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.disabled = false;
     decreaseButton.disabled = true;
     increaseButton.disabled = true;
-    // change image to "cat-asleep.svg" when timer starts
+  
     const img = document.getElementById("imgClick");
     img.src='assets/cat-asleep.svg'
   
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.disabled = false;
         decreaseButton.disabled = false;
         increaseButton.disabled = false;
-        // change image to "cat-awake.svg" when timer is done
+  
         img.src='assets/cat-awake.svg'
   
         // Call the Cataas API to generate a random cat image
@@ -52,7 +52,30 @@ document.addEventListener('DOMContentLoaded', () => {
           .then(data => {
             const img = document.createElement('img');
             img.src = `https://cataas.com${data.url}`;
-            catContainer.appendChild(img);
+  
+            // Open new page with the image and buttons to return home and go to your-cafe.html
+            const popup = window.open('', 'Timer Done', 'width=480,height=300');
+            popup.document.write(`
+              <html>
+                <head>
+                  <title>Timer Done</title>
+                </head>
+                <body>
+                  <img id="popup-image" src="" class="pixelated">
+                  <button onclick="window.close()">Return to Home</button>
+                  <button onclick="location.href='your-cafe.html'">Go to Your Cafe</button>
+                  <script>
+                    const img = document.getElementById('popup-image');
+                    img.addEventListener('load', () => {
+                      window.resizeTo(img.width + 20, img.height + 80);
+                    });
+                    img.src = '${img.src}';
+                  </script>
+                </body>
+              </html>
+            `);
+            const popupImg = popup.document.getElementById('popup-image');
+            popupImg.src = img.src;
   
             // Save the image, time, and date to your-cafe.html
             const card = document.createElement('div');
@@ -67,30 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
               cards.push(card.outerHTML);
               chrome.storage.local.set({cards});
             });
-  
-
-    // Open new page with the image and buttons to return home and go to your-cafe.html
-    const popup = window.open('', 'Timer Done', 'width=4800,height=500');
-    popup.document.write(`
-      <html>
-        <head>
-          <title>Timer Done</title>
-        </head>
-        <body>
-          <img id="popup-image" src="" class="pixelated">
-          <button onclick="window.close()">Return to Home</button>
-          <button onclick="location.href='your-cafe.html'">Go to Your Cafe</button>
-          <script>
-            const img = document.getElementById('popup-image');
-            img.addEventListener('load', () => {
-              window.resizeTo(img.width + 20, img.height + 80);
-            });
-            img.src = '${img.src}';
-          </script>
-        </body>
-      </html>
-    `);
-  })
+          })
           .catch(error => {
             console.log(error);
           });
@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, 1000);
   }
+  
   
   
   // Function to reset the timer
