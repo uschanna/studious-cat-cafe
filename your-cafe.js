@@ -11,12 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
-  // Function to clear all the cards
-  function clearCards() {
-    chrome.storage.local.set({cards: []}, () => {
-      cardContainer.innerHTML = '';
-    });
-  }
+ document.getElementById('clear-button').addEventListener('click', () => {
+    chrome.storage.local.set({cards: []});
+    cardContainer.innerHTML = '';
+  });
+
+
 
   // empty state if there are no cards
   if (cardContainer.innerHTML === '') {
