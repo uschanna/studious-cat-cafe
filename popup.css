@@ -55,12 +55,13 @@ h1 {
   width: 80%;
   height: 80%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+
+
 }
 
 #timer-section {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
