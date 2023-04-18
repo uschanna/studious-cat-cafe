@@ -3,7 +3,7 @@
   "name": "studious cat cafe",
   "version": "0.1.0",
   "description": "get rewarded with cats for studying",
-  "permissions": ["storage", "contextMenus"],
+  "permissions": ["storage", "contextMenus", "alarms", "activeTab", "scripting"],
   "host_permissions": ["<all_urls>"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'",
