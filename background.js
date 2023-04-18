@@ -1,39 +1,39 @@
-chrome.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === 'myAlarm') {
-    chrome.notifications.create({
-      type: 'basic',
-      iconUrl: 'icon.png',
-      title: 'Alarm',
-      message: 'Your alarm has finished!'
+// Define a name for the alarm
+const alarmName = 'pomodoro';
+
+// Define a function to handle the alarm
+function handleAlarm() {
+  // Call the startTimer function from popup.js
+  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    chrome.scripting.executeScript({
+      target: { tabId: tabs[0].id },
+      function: startTimer
+    });
+  });
+}
+
+// Define a function to create the alarm
+function createAlarm() {
+  chrome.alarms.create(alarmName, {
+    delayInMinutes: 25,
+    periodInMinutes: 25
+  });
+}
+
+// Add a listener for when the extension is installed or updated
+chrome.runtime.onInstalled.addListener(details => {
+  if (details.reason === 'install') {
+    createAlarm();
+  } else if (details.reason === 'update') {
+    chrome.alarms.clearAll(() => {
+      createAlarm();
     });
   }
 });
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({ time: 60 });
-  chrome.storage.local.set({ running: false });
-});
-
-chrome.storage.onChanged.addListener((changes, areaName) => {
-  if (areaName === 'local' && changes.time) {
-    chrome.action.setBadgeText({ text: changes.time.newValue.toString() });
+// Add a listener for when the alarm is triggered
+chrome.alarms.onAlarm.addListener(alarm => {
+  if (alarm.name === alarmName) {
+    handleAlarm();
   }
-});
-
-chrome.action.onClicked.addListener((tab) => {
-  chrome.storage.local.get(['running'], (result) => {
-    const running = result.running;
-    if (running) {
-      chrome.storage.local.set({ running: false });
-      chrome.action.setBadgeText({ text: '' });
-      chrome.alarms.clear('myAlarm');
-    } else {
-      chrome.storage.local.get(['time'], (result) => {
-        const time = result.time;
-        chrome.storage.local.set({ running: true });
-        chrome.action.setBadgeText({ text: time.toString() });
-        chrome.alarms.create('myAlarm', { delayInMinutes: time });
-      });
-    }
-  });
 });
