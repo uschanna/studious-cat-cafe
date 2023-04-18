@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let timerIsRunning = false;
   const alarmName = 'pomodoro';
   
-  chrome.runtime.sendMessage({ type: 'GET_ALARM' }, response => {
-    if (response.alarm) {
-      totalSeconds = Math.round((response.alarm.scheduledTime - Date.now()) / 1000);
+  chrome.runtime.getBackgroundPage(backgroundPage => {
+    if (backgroundPage.alarm) {
+      totalSeconds = Math.round((backgroundPage.alarm.scheduledTime - Date.now()) / 1000);
       timerDisplay.innerText = `${Math.floor(totalSeconds / 60).toString().padStart(2, '0')}:${(totalSeconds % 60).toString().padStart(2, '0')}`;
     }
   });
+  
   
   function startTimer() {
     timerIsRunning = true;
@@ -27,7 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // change image to "cat-asleep.svg" when timer starts
     const img = document.getElementById("imgClick");
     img.src='assets/cat-asleep.svg'
-
+    startPomodoro();
+  }
+  
+  function startPomodoro() {
     let minutes = parseInt(timer.textContent.split(':')[0]);
     let seconds = parseInt(timer.textContent.split(':')[1]);
     let totalSeconds = minutes * 60 + seconds;
