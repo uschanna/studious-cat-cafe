@@ -54,9 +54,10 @@ h1 {
 }
 
 #outer-box {
-  border: 3px solid greenyellow;
-  width: 80%;
-  height: 80%;
+  border: 3px solid black;
+  width: 90%;
+  height: 90%;
+  margin: 32px;
 }
 
 #timer-section {
@@ -69,4 +70,8 @@ h1 {
 nav {
   display: flex;
   justify-content: right;
+}
+
+#timer {
+  font-size: x-large;
 }
