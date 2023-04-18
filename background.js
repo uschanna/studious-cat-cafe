@@ -37,3 +37,12 @@ chrome.alarms.onAlarm.addListener(alarm => {
     handleAlarm();
   }
 });
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.type === 'GET_ALARM') {
+    chrome.alarms.get(request.name, alarm => {
+      sendResponse({ alarm: alarm });
+    });
+    return true; // This tells Chrome that you will be sending a response asynchronously
+  }
+});

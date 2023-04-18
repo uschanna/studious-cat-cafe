@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let timerIsRunning = false;
   const alarmName = 'pomodoro';
   
-  chrome.runtime.sendMessage({type: 'GET_ALARM'}, response => {
+  chrome.runtime.sendMessage({ type: 'GET_ALARM', name: alarmName }, response => {
     if (response.alarm) {
       totalSeconds = Math.round((response.alarm.scheduledTime - Date.now()) / 1000);
       timerDisplay.innerText = `${Math.floor(totalSeconds / 60).toString().padStart(2, '0')}:${(totalSeconds % 60).toString().padStart(2, '0')}`;
