@@ -45,8 +45,33 @@ document.addEventListener('DOMContentLoaded', () => {
         increaseButton.disabled = false;
     // change image to "cat-awake.svg" when timer is done
     img.src='assets/cat-awake.svg'
-    window.location.href = "timer-done.html";
-
+  
+        // Call the Cataas API to generate a random cat image
+          fetch('https://cataas.com/cat/says/timer%20iz%20done?width=100&height=100&json=true')
+          .then(response => response.json())
+          .then(data => {
+            const img = document.createElement('img');
+            img.src = `https://cataas.com${data.url}`;
+            img.classList.add('pixelated');
+            catContainer.appendChild(img);
+  
+            // Save the image, time, and date to your-cafe.html
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+              <img src="${img.src}" class="pixelated">
+              <p>Time: ${defaultTime} minutes</p>
+              <p>Date: ${new Date().toLocaleDateString()}</p>
+            `;
+            chrome.storage.local.get(['cards'], data => {
+              const cards = data.cards || [];
+              cards.push(card.outerHTML);
+              chrome.storage.local.set({cards});
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
       } else {
         totalSeconds--;
         minutes = Math.floor(totalSeconds / 60);
