@@ -10,27 +10,46 @@
       width: 800px;
       height: 500px;
     }
-    
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      color: #333;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
     }
-
-    th, td {
+    th {
       text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
     }
-
-    tr:hover {
-      background-color: #f5f5f5;
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card__date {
+      font-size: 1.5em;
+      color: #333;
+    }
+    .card__duration {
+      font-size: 1.5em;
+      color: #333;
+    }
+    .card__cat {
+      font-size: 1.5em;
+      color: #333;
     }
     #card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
+      display: flex;
+      flex-direction: column;
+    }
 
   </style>
 </head>
