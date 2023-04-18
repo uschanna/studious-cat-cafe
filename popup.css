@@ -25,6 +25,11 @@ h1 {
   color: #AAA785;
 }
 
+#outer-box {
+  width: 90%;
+  height: 90%;
+}
+
 #timer-section {
   display: flex;
   flex-direction: column;
