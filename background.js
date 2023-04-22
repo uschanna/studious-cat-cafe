@@ -30,14 +30,14 @@ function backgroundFunction() {
       // When we reach 0, let's clear the timer
       if (newTimeSeconds === 0) {
         // chrome.alarms.clear("pomodoroTimer");
-        chrome.notifications.create({
-          type: "basic",
-          iconUrl: "assets/cat-awake.svg",
-          title: "Pomodoro Timer",
-          message: "The timer has ended!",
-        });
+        // chrome.notifications.create({
+        //   type: "basic",
+        //   iconUrl: "assets/cat-awake.svg",
+        //   title: "Pomodoro Timer",
+        //   message: "The timer has ended!",
+        // });
 
-        chrome.storage.local.set({ "timerIsRunning": false }, () => {
+        chrome.storage.local.set({ "timerIsRunning": false, "timerIsDone": true}, () => {
           console.log("timerIsRunning is set to " + false);
         });
       }

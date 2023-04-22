@@ -8,13 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const increaseButton = document.getElementById('increase-button');
   
   const catContainer = document.getElementById('cat-container');
-  let intervalId;
+  let popupTimerIntervalId;
   let timerIsRunning = false;
   let defaultMinutes = 25;
   let defaultSeconds = defaultMinutes * 60;
   
 
-  chrome.storage.local.get(["timeSeconds", "timerIsRunning", "timerIsDone"], (res) => {
+  chrome.storage.local.get(["timeSeconds", "timerIsRunning", "timerIsDone", "isReset"], (res) => {
     if (res.timeSeconds === undefined) {
       chrome.storage.local.set({ "timeSeconds": defaultSeconds }).then(() => {
         console.log("Value is set to " + defaultSeconds);
@@ -28,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (res.timerIsDone === undefined) {
       chrome.storage.local.set({ "timerIsDone": false }).then(() => {
         console.log("timerIsDone is set to " + false);
+      });
+    }
+
+    if (res.isReset === undefined) {
+      chrome.storage.local.set({ "isReset": false }).then(() => {
+        console.log("isReset is set to " + false);
       });
     }
   });
@@ -72,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       img.src = "assets/cat-asleep.svg";
 
       if (totalSeconds <= 0) {
-        clearInterval(intervalId);
+        // clearInterval(popupTimerIntervalId);
         timerIsRunning = false;
         startButton.disabled = false;
         decreaseButton.disabled = false;
@@ -101,8 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  intervalId = setInterval(timeDecrement, 1000);
-
+  popupTimerIntervalId = setInterval(timeDecrement, 1000);
 
   function timerIsDone() {
     // change image to "cat-awake.svg" when timer is done
@@ -110,55 +115,64 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.timerIsDone) {
         return;
       }
-    });
+  
+      timer.textContent = "Done!";
+      const img = document.getElementById("imgClick");
+      img.src = "assets/cat-awake.svg";
 
-    timer.textContent = "Done!";
-    const img = document.getElementById("imgClick");
-    img.src = "assets/cat-awake.svg";
+      // Call the Cataas API to generate a random cat image
+      fetch(
+        "https://cataas.com/cat/says/timer%20iz%20done?width=300&height=200&size=50&json=true"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const img = document.createElement("img");
+          img.src = `https://cataas.com${data.url}`;
+          img.classList.add("pixelated");
+          catContainer.appendChild(img);
+          
+          // show "your-cafe-button" when timer is done
+          document.getElementById("your-cafe-button").style.display = "block";
 
-    // Call the Cataas API to generate a random cat image
-    fetch(
-      "https://cataas.com/cat/says/timer%20iz%20done?width=300&height=200&size=50&json=true"
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const img = document.createElement("img");
-        img.src = `https://cataas.com${data.url}`;
-        img.classList.add("pixelated");
-        catContainer.appendChild(img);
-        
-        // show "your-cafe-button" when timer is done
-        document.getElementById("your-cafe-button").style.display = "block";
-
-        // Save the image, time, and date to your-cafe.html
-        const card = document.createElement("div");
-        card.classList.add("card");
-        card.innerHTML = `
-        <img src="${img.src}" class="pixelated">
-        <p>Time: ${defaultMinutes} minutes</p>
-        <p>Date: ${new Date().toLocaleDateString()}</p>
-      `;
-        chrome.storage.local.get(["cards"], (data) => {
-          const cards = data.cards || [];
-          cards.push(card.outerHTML);
-          chrome.storage.local.set({ cards });
+          // Save the image, time, and date to your-cafe.html
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.innerHTML = `
+          <img src="${img.src}" class="pixelated">
+          <p>Time: ${defaultMinutes} minutes</p>
+          <p>Date: ${new Date().toLocaleDateString()}</p>
+        `;
+          chrome.storage.local.get(["cards"], (data) => {
+            const cards = data.cards || [];
+            cards.push(card.outerHTML);
+            chrome.storage.local.set({ cards });
+          });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
       });
   }
 
   // Function to start the timer
   function startTimer() {
-    chrome.storage.local.get(["timer", "timeSeconds", "timerIsRunning"], (res) => {
+    chrome.storage.local.get(["isReset"], (res) => {
       timerIsRunning = true;
-
-      timeDecrement();
       
       chrome.storage.local.set({ "timerIsRunning": timerIsRunning }, () => {
         console.log("timerIsRunning is set to " + timerIsRunning);
       });
+      
+      // if (res.isReset) {
+      //   popupTimerIntervalId = setInterval(timeDecrement, 1000);
+      //   chrome.storage.local.set({ "isReset": false }, () => {
+      //     console.log("isReset is set to " + false);
+      //   });
+      // } else {
+        
+      // }
+
+      timeDecrement();
     });
   }
   
@@ -167,14 +181,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetTimer() {
     const img = document.getElementById("imgClick");
     img.src='assets/cat-awake.svg'
-    clearInterval(intervalId);
+    // clearInterval(popupTimerIntervalId);
     timerIsRunning = false;
     startButton.disabled = false;
     resetButton.disabled = true;
     decreaseButton.disabled = false;
     increaseButton.disabled = false;
     catContainer.innerHTML = '';
-    chrome.storage.local.set({ "timeSeconds": defaultSeconds, "timerIsRunning": false, "timerIsDone": false }, () => {
+    chrome.storage.local.set({ "timeSeconds": defaultSeconds, "timerIsRunning": false, "timerIsDone": false}, () => {
       console.log("in resetTimer: timeSeconds is set to " + defaultSeconds);
       console.log("in resetTimer: timerIsRunning is set to " + false);
       console.log("in resetTimer: timerIsDone is set to " + false);
