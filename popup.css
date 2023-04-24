@@ -69,5 +69,15 @@ nav {
 .header {
   display: flex;
   flex-direction: row;
+  align-items: baseline;
   justify-content: space-between;
+}
+
+#your-cafe-button {
+  border-bottom: none;
+}
+
+#your-cafe-button:hover {
+  background-color: #AAA785;
+  color: black
 }
