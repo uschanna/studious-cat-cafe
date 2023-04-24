@@ -184,13 +184,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to decrease the time by 1 minutes
   function decreaseTime() {
     chrome.storage.local.get(["timeSeconds"], (res) => {
-      timeSeconds = Math.max(res.timeSeconds - 60, 60);
-      let minutes = res.timeSeconds / 60;
-      chrome.storage.local.set({ "timeSeconds": timeSeconds }, () => {
-        timer.textContent = `${minutes.toString().padStart(2, '0')}:00`;
+      let newTime = Math.max(res.timeSeconds - 60, 60);
+      chrome.storage.local.set({ "timeSeconds": newTime }, () => {
+        console.log("timeSeconds is set to " + newTime);
+        let displayMinutes = Math.floor(newTime / 60);
+        let displaySeconds = newTime % 60;
+        timer.textContent = `${displayMinutes.toString().padStart(2, '0')}:${displaySeconds.toString().padStart(2, '0')}`;
       });
     });
   }
+  
   
   // Function to increase the time by 1 minutes
   function increaseTime() {
