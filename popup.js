@@ -108,52 +108,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   popupTimerIntervalId = setInterval(timeDecrement, 1000);
-
   function timerIsDone() {
-    // change image to "cat-awake.svg" when timer is done
-    chrome.storage.local.get(["timerIsDone"], (res) => {
+    // Replace image with "cat-done.svg" when timer is done
+    chrome.storage.local.get(["timerIsDone", "startTime"], (res) => {
       if (!res.timerIsDone) {
         return;
       }
   
-      timer.textContent = "Done!";
+      // Calculate time spent studying in minutes
+      const endTime = new Date().getTime();
+      const timeDiff = endTime - res.startTime;
+      const timeSpentStudying = Math.round(timeDiff / 1000 / 60);
+  
+      timer.textContent = "timer iz done";
       const img = document.getElementById("imgClick");
-      img.src = "assets/cat-awake.svg";
-
-      // Call the Cataas API to generate a random cat image
-      fetch(
-        "https://cataas.com/cat/says/timer%20iz%20done?width=300&height=200&size=50&json=true"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          const img = document.createElement("img");
-          img.src = `https://cataas.com${data.url}`;
-          img.classList.add("pixelated");
-          catContainer.appendChild(img);
-          
-          // show "your-cafe-button" when timer is done
-          document.getElementById("your-cafe-button").style.display = "block";
-
-          // Save the image, time, and date to your-cafe.html
-          const card = document.createElement("div");
-          card.classList.add("card");
-          card.innerHTML = `
-          <img src="${img.src}" class="pixelated">
-          <p>Time: ${defaultMinutes} minutes</p>
-          <p>Date: ${new Date().toLocaleDateString()}</p>
-        `;
-          chrome.storage.local.get(["cards"], (data) => {
-            const cards = data.cards || [];
-            cards.push(card.outerHTML);
-            chrome.storage.local.set({ cards });
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      img.src = "assets/cat-done.svg";
+  
+      // Add image, time, and date to your-cafe.html
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerHTML = `
+        <img src="${img.src}" class="pixelated">
+        <p>Time: ${timeSpentStudying} minutes</p>
+        <p>Date: ${new Date().toLocaleDateString()}</p>
+      `;
+      chrome.storage.local.get(["cards"], (data) => {
+        const cards = data.cards || [];
+        cards.push(card.outerHTML);
+        chrome.storage.local.set({ cards });
       });
+  
+      // Reset the timer after 3 seconds
+      setTimeout(resetTimer, 3000);
+    });
   }
-
+  
   // Function to start the timer
   function startTimer() {
     chrome.storage.local.get(["isReset"], (res) => {
@@ -163,19 +152,12 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("timerIsRunning is set to " + timerIsRunning);
       });
       
-      // if (res.isReset) {
-      //   popupTimerIntervalId = setInterval(timeDecrement, 1000);
-      //   chrome.storage.local.set({ "isReset": false }, () => {
-      //     console.log("isReset is set to " + false);
-      //   });
-      // } else {
-        
-      // }
-
       timeDecrement();
+  
+      // Set start time in storage
+      chrome.storage.local.set({ "startTime": new Date().getTime() });
     });
   }
-  
   
   // Function to reset the timer
   function resetTimer() {
